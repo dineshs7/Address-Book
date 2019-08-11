@@ -1,0 +1,121 @@
+extends layout
+
+block content
+    h1.text-center  Employee form
+    hr
+    div(class='row')
+      form(id='employeeform', method='POST', action='/', class='form-horizontal', autocomplete='off')
+        div(class='form-group')
+          label(for='empid' class='col-md-offset-2 col-md-2 control-label') 
+            | Employee ID:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type='text', name='empid', class='form-control', id='empid', placeholder='Enter Employee ID', title='Employee ID')
+            div(class='error')
+        div(class='form-group')
+          label(for='fname' class='col-md-offset-2 col-md-2 control-label') 
+            | First Name:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type='text', name='fname', class='form-control', id='fname', placeholder='Enter First Name', title='First Name',onkeypress='return alphaCharOnly(event)')
+            div(class='error')
+        div(class='form-group')
+          label(for='lname' class='col-md-offset-2 col-md-2 control-label') 
+            | Last Name:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type="text", name="lname", class='form-control', id='lname', placeholder="Enter Last Name", title='Last Name', onkeypress='return alphaCharOnly(event)')
+            div(class='error')
+        div(class='form-group')
+          label(for='dob' class='col-md-offset-2 col-md-2 control-label') 
+            | DOB:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type="date", name="dob", class='', id='dob', placeholder="Select Your DOB", title='DOB')
+            div(class='error')
+        div(class='form-group')
+          label(for='gender' class='col-md-offset-2 col-md-2 control-label') 
+            | Gender:
+            span(class='required') * 
+          div(class='col-md-5')
+            label(class='radio-inline')
+              input(type="radio", name="gender", id='gender', placeholder="Select Your Gender", title='Male', value='male') 
+              | Male    
+            label(class='radio-inline')    
+              input(type="radio", name="gender", id='gender', placeholder="Select Your Gender", title='Female', value='female')
+              | Female
+            label(class='radio-inline')
+              input(type="radio", name="gender", id='gender', placeholder="Select Your Gender", title='Transgender', value='transgender')
+              | Transgender
+            div(id='radio-error')
+        div(class='form-group')
+          label(for='phno' class='col-md-offset-2 col-md-2 control-label') 
+            | Phone No:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type='text', name='phno', class='form-control', id='phno', placeholder='Enter Phone No', title='Phone No',onkeypress='return numberOnly(event)', maxLength='10')
+            div(class='error')
+        div(class='form-group')
+          label(for='address' class='col-md-offset-2 col-md-2 control-label') Address:
+          div(class='col-md-5')
+            textarea(name='address', id='address', class='form-control', cols='30', rows='5', title='Address')
+        div(class='form-group')
+          label(for='mail' class='col-md-offset-2 col-md-2 control-label') 
+            | Email:
+            span(class='required') * 
+          div(class='col-md-5')
+            input(type='email', name='mail', class='form-control', id='mail', placeholder='Enter Email ID', title='Email ID')
+            div(class='error')
+        div(class='form-group')
+          label(for='job' class='col-md-offset-2 col-md-2 control-label') Job:
+          div(class='col-md-5')
+            input(type='text', name='job', class='form-control', id='job', placeholder='Enter Your Job', title='Job')
+        div(class='form-group')
+          label(for='salary' class='col-md-offset-2 col-md-2 control-label') Salary:
+          div(class='col-md-5')
+            input(type='text', name='salary', class='form-control', id='salary', placeholder='Enter Your Salary', title='Salary')
+        div(class='form-group')
+          div(class='col-md-offset-4 col-md-4')
+            button(type='submit', class='btn btn-primary', name='submit', id='Submit') Submit
+
+    script.
+      $(document).ready(function() {
+        $.validator.addMethod("idPattern",function(value,element){
+            return /^(emp)[0-9]{3}$/.test(value);
+        });
+        $.validator.addMethod("alphaOnly",function(value,element){
+          return /^[a-zA-Z]*$/.test(value);
+        })
+        $.validator.addMethod("phoneNo",function(value,element){
+          return /^[0-9]{10}$/.test(value);
+        })
+        $('#employeeform').validate({
+          rules: {
+            empid: {required:true ,idPattern:true},
+            fname: {required:true,alphaOnly:true},
+            lname: {required:true,alphaOnly:true},
+            dob: {required:true},
+            gender: {required:true},
+            phno: {required:true,phoneNo:true},
+            mail: {required:true,email:true}
+          },
+          messages: {
+            empid: { required:"Emp id is required",idPattern:"Emp id should contain 'emp' followed 3 digit"},
+            fname: { required:"First name is required",alphaOnly:"First name should conatin alphabetic characters only"},
+            lname: { required:"Last name is required",alphaOnly:"Last name should conatin alphabetic characters only"},
+            dob: { required:"Please select your DOB"},
+            gender: { required:"Please select your gender"},
+            phno: { required:"Phone number is required",phoneNo:"Please enter a valid 10 digit phone number"},
+            mail: { required:"Email id is required",email:"Please enter valid email id"}
+          },
+          errorPlacement:function(error,element){
+            if(element.is(':radio')){
+                const radioErr=$('#radio-error');
+                error.appendTo(radioErr);
+            }
+            else {
+                error.appendTo(element.next()); 
+            }
+          }
+        });
+      });

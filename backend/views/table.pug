@@ -1,0 +1,31 @@
+doctype html
+head
+ title=title
+ meta(http-equiv="content-type", content="text/plain; charset=utf-8")
+ link(rel='stylesheet', href='/stylesheets/style.css')
+ link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+body
+ table(class='table table-striped')
+  caption Employee Table
+  tr
+   th Employee ID
+   th First Name
+   th Last Name
+   th DOB
+   th Gender
+   th Phone Number
+   th Address
+   th Email ID
+   th Job
+   th Salary
+  tr
+   td #{req.body.empid}
+   td #{req.body.fname}
+   td #{req.body.lname}
+   td #{req.body.dob} 
+   td #{req.body.gender} 
+   td #{req.body.phno} 
+   td #{req.body.address} 
+   td #{req.body.mail}
+   td #{req.body.job} 
+   td #{req.body.salary} 
