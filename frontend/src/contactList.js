@@ -42,18 +42,20 @@ class ContactList extends React.Component {
       }
     render() {
     return (
-        <div style={{position:'relative'}}>
+        <div style={{position:'relative'}} >
             <Form.Group as={Row}  id="search">
                 <Col md={4}><span>Total: {this.state.totalContacts+" contacts"}</span></Col>
                 <Col md={8}>
-                    <Form.Control type="text" placeholder="Search Contact" className="styledControl" title="Search Contact" onChange={this.searchHandler}/>
+                    <Form.Control type="text" placeholder="Search Contact" className="styledControl search-button" title="Search Contact" onChange={this.searchHandler}/>
                 </Col>
             </Form.Group>
             <Form.Group as={Row}>
-                <Col md={12} id="scrollable">
-                <ListGroup variant="flush">{this.state.items.map((user,index)=>(
-                <ListGroup.Item variant="primary" action className="borderless" key={index} onClick={(event)=>
-                ReactDOM.render(<ViewContact name={user.name} phno={user.phno} email={user.email} image={user.image.replace('public/','http://localhost:7000/')}/>,document.getElementById('target'))}>
+                <Col md={12}>
+                <ListGroup variant="flush" id="scrollable">{this.state.items.map((user,index)=>(
+                <ListGroup.Item variant="primary" action className="borderless" key={index} onClick={(event)=>{
+                ReactDOM.render(
+                <ViewContact name={user.name} phno={user.phno} email={user.email} image={user.image.replace('public/','http://localhost:7000/')}/>,document.getElementById('target'));
+                console.log("Onclick:",user.name,user.phno,user.email)}}>
                 <Image src={user.image.replace('public/','http://localhost:7000/')} alt="user" style={{borderRadius:'50%',width:'40px',height:'40px'}}></Image>
                 <span>{user.name}</span></ListGroup.Item>))}
                 </ListGroup>

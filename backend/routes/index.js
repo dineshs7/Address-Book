@@ -15,7 +15,6 @@ router.get('/', function(req, res) {
 /* Post table page */
 router.post('/',function(req,res){
   res.render('table',{req:req});
-  //console.log(req.body);
 });
 
 /* Multer storage definiton */
@@ -95,9 +94,33 @@ router.get('/contactList',(req,res)=>{
 
 /*Update contact based on name*/
 router.post('/updateContact',(req,res)=>{
-  let data=new Data();
-  console.log("new values to be updated:",req.body);
-
+  upload(req,res,err=>{
+  //console.log("new values to be updated:",req.body);
+  const delPreviousImage=req.body.previousImage.replace('http://localhost:7000/','./public/');
+  //console.log("previous image",delPreviousImage);
+  if(delPreviousImage!=='./public/images/user.png'){ //automatically delete unused images from /public/images
+    fs.unlink(delPreviousImage,(err)=>{
+      if(err) return console.log("Error while deleting file");
+      return console.log("File deleted successfully");
+    });
+  }
+  let setImage=""; 
+  if(!req.file)
+  {
+    setImage=req.body.previousImage.replace('http://localhost:7000/','public/');
+    //set previous contact picture if user not change previous display picture
+  }
+  else{
+    setImage=req.file.path; //set new contact picture if user changes previous display picture
+  }
+ Data.update({"name":req.body.previousName},{$set:{"name":req.body.name,"phno":req.body.phno,"email":req.body.email,"image":setImage}},{multi:false},(err)=>{
+    if(err)
+    {
+      return res.json({success:false,error:err,message:"Contact update failed"})
+    }
+    return res.json({success:true,message:"Contact updated successfully"});
+  });
+})
 });
 
 

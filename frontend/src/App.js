@@ -4,8 +4,23 @@ import AddContact from './addContact';
 import ContactList from './contactList';
 import {Container,Row,Col,Form, Button} from 'react-bootstrap';
 import {FaPlus} from 'react-icons/fa';
+import { resolve } from 'q';
 
-function App() {
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={loading:true}
+  };
+
+  componentDidMount(){
+    callPageLoader().then(()=>{this.setState({loading:false})});
+  };
+
+  render(){
+    const {loading}=this.state;
+    if(loading){
+      return null;
+    }
   return (
   <Container fluid>
     <Row>
@@ -16,7 +31,11 @@ function App() {
       </Col>
       </Row>      
   </Container>
-  );
+  )};
+};
+
+function callPageLoader(){
+  return new Promise((resolve) => setTimeout(() => resolve(), 250));
 }
 
 class AddButton extends React.Component {
@@ -32,11 +51,11 @@ class AddButton extends React.Component {
   render(){
   return (
       <Form onSubmit={this.handleSubmit} id="addBtn">
-    <Button type="submit" size="lg" variant="primary" className="add-button" title="Add New Contact">
+    <Button type="submit" size="lg" variant="light" className="add-button" title="Add New Contact">
       <FaPlus/></Button>
     </Form>
     
   )}
-}
+};
 
 export  default App;

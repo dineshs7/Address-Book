@@ -74,9 +74,29 @@ class EditCardForm extends React.Component {
         {
             console.log("Original Values:",this.props);
             console.log("Edited Values:",this.state.fields,this.state.fileToUpdate);
+            let fields=this.state.fields;
             const fd=new FormData();
             fd.append("file",this.state.fileToUpdate);
-            axios.post('http://localhost:7000/updateContact',{currentVal:this.state.fields,previousVal:this.props},{});
+            fd.append("name",fields["name"]);
+            fd.append("phno",fields["phno"]);
+            fd.append("email",fields["email"]);
+            fd.append("previousName",this.props.name);
+            fd.append("previousPhno",this.props.phno);
+            fd.append("previousEmail",this.props.email);
+            fd.append("previousImage",this.props.image);
+            //console.log("update picture:",fd.get("file"));
+            axios.post('http://localhost:7000/updateContact',fd,{})
+            .then((res)=>{
+                if(res.data.success)
+                {
+                    alert("Contact updated successfully");
+                    window.location.replace("/");
+                }
+                else{
+                    alert("Contact update failed");
+                    window.location.replace("/");
+                }
+            })
         }
     };
 
@@ -131,32 +151,32 @@ class EditCardForm extends React.Component {
         <Form onSubmit={this.handleSave} onReset={this.handleCancel} noValidate encType="multipart/form-data" autoComplete="off">
             <Form.Group>
         <Card >
-            <Card.Img variant="top" id="image" src= {this.props.image || "./user.png"} className="avatar-background" alt="default image" title="Display Picture"/>
+            <Card.Img variant="top" id="image" src= {this.props.image || "user1.png"} className="avatar-background" alt="default image" title="Display Picture"/>
         </Card>
         </Form.Group>
        {/* <Card.ImgOverlay className="align-center text-center"> */}
             <Form.Group>
-               <Form.Label className="btn btn-primary btn-block" htmlFor="update" title="Change Picture"> 
+               <Form.Label className="btn btn-primary btn-block button" htmlFor="update" title="Change Picture"> 
                     <Form.Control id="update" name="update" type="file" accept="image/*" className="d-none" onChange={this.updateImage}/><FaUpload/>&nbsp;Change Picture
                     </Form.Label>
             </Form.Group>
             <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" name="name" placeholder="Enter Name" className="styledControl" value={this.state.fields.name}  onChange={this.handleChange} title="Contact Name" maxLength="25"/>
+            <Form.Control type="text" name="name" placeholder="Enter Name" className="styled-control" value={this.state.fields.name}  onChange={this.handleChange} title="Contact Name" maxLength="25"/>
             <Form.Label className="error-label">{this.state.errors.name}</Form.Label>
         </Form.Group>
         <Form.Group>
             <Form.Label>Phone</Form.Label>
-            <Form.Control type="text" name="phno" placeholder="Enter Phone No" className="styledControl" value={this.state.fields.phno} onChange={this.handleChange} maxLength="10" title="Contact Number"/>
+            <Form.Control type="text" name="phno" placeholder="Enter Phone No" className="styled-control" value={this.state.fields.phno} onChange={this.handleChange} maxLength="10" title="Contact Number"/>
             <Form.Label className="error-label">{this.state.errors.phno}</Form.Label>
         </Form.Group>
         <Form.Group>
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" name="email" placeholder="Enter Email" className="styledControl" value={this.state.fields.email} onChange={this.handleChange} title="Contact Email ID"/>
+            <Form.Control type="email" name="email" placeholder="Enter Email" className="styled-control" value={this.state.fields.email} onChange={this.handleChange} title="Contact Email ID"/>
             <Form.Label className="error-label">{this.state.errors.email}</Form.Label>
         </Form.Group>
-        <Button variant="primary" type="reset" style={{float:'left'}} title="Cancel Changes"><FaTimes></FaTimes>&nbsp;Cancel</Button> 
-        <Button variant="primary" type="submit" style={{float:'right'}} title="Save Changes"><FaCheck></FaCheck>&nbsp;Save</Button> 
+        <Button variant="primary" className="button" type="reset" style={{float:'left'}} title="Cancel Changes"><FaTimes></FaTimes>&nbsp;Cancel</Button> 
+        <Button variant="primary" className="button" type="submit" style={{float:'right'}} title="Save Changes"><FaCheck></FaCheck>&nbsp;Save</Button> 
         
     </Form>
     )}

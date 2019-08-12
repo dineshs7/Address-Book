@@ -171,32 +171,32 @@ class AddCardForm extends React.Component {
     <Form onSubmit={this.handleSaveAddContact} onReset={this.handleCancelAddContact} noValidate encType="multipart/form-data" autoComplete="off">
         <Form.Group>
         <Card>
-            <Card.Img variant="top" src={this.state.filePreview || "user.png"} className="avatar-background" alt="default image" title="Display Picture"/>
+            <Card.Img variant="top" src={this.state.filePreview || "background.png"} className="avatar-background" alt="default image" title="Display Picture"/>
         </Card>
         </Form.Group>
        {/* <Card.ImgOverlay className="align-center text-center"> */}
         <Form.Group>
-            <Form.Label className="btn btn-primary btn-block" htmlFor="upload" title="Choose Picture"> 
+            <Form.Label className="btn button btn-block btn-primary" htmlFor="upload" title="Choose Picture"> 
                 <input id="upload" name="file" type="file" accept="image/*" className="d-none" onChange={this.uploadImage}/><FaUpload/>&nbsp;Choose Picture
             </Form.Label>
         </Form.Group>
         <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name" className="styledControl" value={this.state.fields.name} id="name" name="name" onChange={this.handleChange} maxLength="25" title="Contact Name"/>
+            <Form.Control type="text" placeholder="Enter Name" className="styled-control" value={this.state.fields.name} id="name" name="name" onChange={this.handleChange} maxLength="25" title="Contact Name"/>
             <Form.Label className="error-label">{this.state.errors.name}</Form.Label>
         </Form.Group>
         <Form.Group>
             <Form.Label>Phone</Form.Label>
-            <Form.Control type="text" placeholder="Enter Phone Number" className="styledControl" value={this.state.fields.phno} id="phno" name="phno" onChange={this.handleChange} maxLength="10" title="Contact Number"/>
+            <Form.Control type="text" placeholder="Enter Phone Number" className="styled-control" value={this.state.fields.phno} id="phno" name="phno" onChange={this.handleChange} maxLength="10" title="Contact Number"/>
             <Form.Label className="error-label">{this.state.errors.phno}</Form.Label>
         </Form.Group>
         <Form.Group>
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter Email" className="styledControl" value={this.state.fields.email} id="email" name="email" onChange={this.handleChange} title="Contact Email ID"/>
+            <Form.Control type="email" placeholder="Enter Email" className="styled-control" value={this.state.fields.email} id="email" name="email" onChange={this.handleChange} title="Contact Email ID"/>
             <Form.Label className="error-label">{this.state.errors.email}</Form.Label>
         </Form.Group>
-       <Button variant="primary" type="reset" style={{float:'left'}} title="Cancel Save"><FaTimes></FaTimes>&nbsp;Cancel</Button>
-        <Button variant="primary" type="submit" style={{float:'right'}} title="Save Contact"><FaCheck></FaCheck>&nbsp;Save</Button> 
+       <Button variant="primary" className="button" type="reset" style={{float:'left'}} title="Cancel Save"><FaTimes></FaTimes>&nbsp;Cancel</Button>
+        <Button variant="primary" className="button" type="submit" style={{float:'right'}} title="Save Contact"><FaCheck></FaCheck>&nbsp;Save</Button> 
     </Form>
     )}
 }
