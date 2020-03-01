@@ -2,6 +2,7 @@
   "name": "fullstack",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https//dineshs7.github.io/Address-Book",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,5 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^4.1.1"
-  }
+  },
+  "devDependencies": {}
 }
